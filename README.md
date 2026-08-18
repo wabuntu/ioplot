@@ -15,6 +15,9 @@ sorting, incremental search, pause, adjustable refresh rate, and a
 confirm-before-you-regret-it kill dialog — all without leaving the
 terminal or memorizing a flag.
 
+Linux only — it reads `/proc/[pid]/io`, the same kernel interface `iotop`
+itself uses, which doesn't exist anywhere else.
+
 ```
 $ sudo ioplot
 ```

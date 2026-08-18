@@ -27,13 +27,11 @@ jobs:
       - name: Audit dependencies
         run: cargo audit
 
+  # ioplot reads /proc/[pid]/io, so it only exists on Linux — same reason
+  # the real iotop is Linux-only. No macOS/Windows legs here.
   build-test:
-    name: Build and test (${{ matrix.os }})
-    strategy:
-      matrix:
-        os: [ubuntu-latest, macos-latest, windows-latest]
-    runs-on: ${{ matrix.os }}
-
+    name: Build and test
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
       - uses: swatinem/rust-cache@v2
@@ -43,16 +41,9 @@ jobs:
           --release
           --verbose
         env:
-          CARGO_TARGET_DIR: binaries/${{ matrix.os }}
+          CARGO_TARGET_DIR: binaries/ubuntu-latest
 
-      - name: Run tests (without coverage)
-        if: matrix.os != 'ubuntu-latest'
-        run: >
-          cargo test
-          --verbose
-
-      - name: Run tests (with coverage)
-        if: matrix.os == 'ubuntu-latest'
+      - name: Run tests with coverage
         run: >
           cargo install cargo-tarpaulin
           && cargo tarpaulin
@@ -62,14 +53,13 @@ jobs:
           --skip-clean
 
       - name: Upload coverage reports to Codecov
-        if: matrix.os == 'ubuntu-latest'
         uses: codecov/codecov-action@v3
 
       - name: Upload binary artifact
         uses: actions/upload-artifact@v4
         with:
-          name: ioplot-${{ matrix.os }}
-          path: binaries/${{ matrix.os }}/release/ioplot${{ matrix.os == 'windows-latest' && '.exe' || '' }}
+          name: ioplot-ubuntu-latest
+          path: binaries/ubuntu-latest/release/ioplot
 
   push-binaries:
     name: Push binaries
@@ -83,16 +73,6 @@ jobs:
         with:
           name: ioplot-ubuntu-latest
           path: binaries/ubuntu-latest/release
-
-      - uses: actions/download-artifact@v4
-        with:
-          name: ioplot-macos-latest
-          path: binaries/macos-latest/release
-
-      - uses: actions/download-artifact@v4
-        with:
-          name: ioplot-windows-latest
-          path: binaries/windows-latest/release
 
       - name: Remove previously committed package files
         run: git rm -rf --ignore-unmatch target/debian target/release/rpmbuild
@@ -124,8 +104,6 @@ jobs:
           git config user.name github-actions
           git config user.email github-actions@github.com
           git add -f binaries/ubuntu-latest/release/ioplot
-          git add -f binaries/macos-latest/release/ioplot
-          git add -f binaries/windows-latest/release/ioplot.exe
           git add -f target/debian/*.deb
           git add -f target/release/rpmbuild/RPMS/x86_64/*.rpm
           git commit -m 'uploading binaries and packages'
