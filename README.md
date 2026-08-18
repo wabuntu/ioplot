@@ -4,16 +4,12 @@
 [![docs.rs](https://img.shields.io/docsrs/ioplot)](https://docs.rs/ioplot)
 [![CI](https://github.com/wabuntu/ioplot/actions/workflows/rust.yml/badge.svg)](https://github.com/wabuntu/ioplot/actions/workflows/rust.yml)
 
-**`iotop` never left the 2000s. `ioplot` is what it would look like if it
-were built today.**
-
-Same job — rank processes by live disk I/O — but with a scrolling
-read/write history graph on top instead of a bare snapshot, a colorful
-heatmap that makes a hot process pop out of the list at a glance, and the
-kind of keyboard-driven workflow you expect from a modern TUI: live
+A TUI that ranks processes by live disk I/O, in the same spirit as the
+classic `iotop` — with a scrolling read/write history graph on top of the
+process list, a colorful heatmap that makes a hot process pop out at a
+glance, and a keyboard-driven workflow built for today's terminals: live
 sorting, incremental search, pause, adjustable refresh rate, and a
-confirm-before-you-regret-it kill dialog — all without leaving the
-terminal or memorizing a flag.
+confirm-before-you-regret-it kill dialog.
 
 Linux only — it reads `/proc/[pid]/io`, the same kernel interface `iotop`
 itself uses, which doesn't exist anywhere else.
@@ -25,12 +21,12 @@ $ sudo ioplot
 <img src="https://raw.githubusercontent.com/wabuntu/ioplot/main/docs/list.png" alt="ioplot's process list, colored by I/O intensity, with a scrolling read/write history graph on top" width="660">
 <img src="https://raw.githubusercontent.com/wabuntu/ioplot/main/docs/detail.png" alt="ioplot's process detail popup showing read/write rate and cumulative totals" width="660">
 
-## Why not just `iotop`?
+## What the history graph adds
 
-`iotop` shows you a table. `ioplot` shows you a table *and the shape of
-your last two minutes of I/O*, so a spike that already happened doesn't
-just vanish — you can see it coming and going in the graph while you dig
-into who caused it in the list below.
+A snapshot table alone can't show you a spike that already happened. The
+graph on top keeps the shape of your last two minutes of I/O on screen, so
+you can see it coming and going while you dig into who caused it in the
+list below.
 
 ## Reading the screen
 
