@@ -1,0 +1,20 @@
+[package]
+name = "ioplot"
+version = "0.1.0"
+authors = ["wabuntu <to.wabuntu@proton.me>"]
+edition = "2024"
+license = "MIT OR Apache-2.0"
+homepage = "https://github.com/wabuntu"
+repository = "https://github.com/wabuntu/ioplot"
+documentation = "https://docs.rs/ioplot"
+description = """
+TUI that ranks processes by live disk I/O, like `iotop` with a
+scrolling read/write history graph on top.
+"""
+categories = ["command-line-utilities", "visualization"]
+keywords = ["iotop", "disk-io", "tui", "monitoring", "cli"]
+
+[dependencies]
+clap = { version = "4.6.6", features = ["derive"] }
+ratatui = "0.30.2"
+crossterm = "0.29.0"
