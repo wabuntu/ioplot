@@ -1,7 +1,6 @@
 # ioplot
 
 [![Crates.io](https://img.shields.io/crates/v/ioplot.svg)](https://crates.io/crates/ioplot)
-[![docs.rs](https://img.shields.io/docsrs/ioplot)](https://docs.rs/ioplot)
 [![CI](https://github.com/wabuntu/ioplot/actions/workflows/rust.yml/badge.svg)](https://github.com/wabuntu/ioplot/actions/workflows/rust.yml)
 
 A TUI that ranks processes by live disk I/O, in the same spirit as the
